@@ -2,28 +2,15 @@
 # The filesystem that contains the filesystem checker binary (typically /system) cannot
 # specify MF_CHECK, and must come before any filesystems that do specify MF_CHECK
 
-# mount point       fstype    device                                                                flags
+# mount point       fstype    device                                            flags
+/metadata           ext4      /dev/block/by-name/metadata                       flags=display="Metadata"
+/cache              ext4      /dev/block/by-name/rescue                         flags=display="Cache";wipeduringfactoryreset
 
-/system_ext         auto      /dev/block/mapper/system_ext                      flags=backup=1;display="System_ext";logical;slotselect;
-/system_root        auto      /dev/block/mapper/system                          flags=backup=1;display="System";logical;slotselect;
-/vendor             auto      /dev/block/mapper/vendor                          flags=backup=1;display="Vendor";logical;slotselect;
-/product            auto      /dev/block/mapper/product                         flags=backup=1;display="Product";logical;slotselect;
-
-/system_image       emmc      /dev/block/mapper/system_a                        flags=display="System.img";flashimg=1
-/system_ext_image   emmc      /dev/block/mapper/system_ext_a                    flags=display="System_EXT.img";flashimg=1
-/vendor_image       emmc      /dev/block/mapper/vendor_a                        flags=display="Vendor.img";flashimg=1
-/product_image      emmc      /dev/block/mapper/product_a                       flags=display="Product.img";flashimg=1
-
-/data               f2fs      /dev/block/by-name/userdata                       flags=fileencryption=aes-256-xts:aes-256-cts:v2,keydirectory=/metadata/vold/metadata_encryption
-/metadata           ext4      /dev/block/by-name/md_udc                         flags=display="Metadata";wipeduringfactoryreset
-/cache              ext4      /dev/block/by-name/rescue                         flags=display="Cache";wipeingui;wipeduringfactoryreset
-
-## User-writable 
+## User-writable
 /boot               emmc      /dev/block/by-name/boot                           flags=display="Boot";flashimg=1;backup=1;slotselect;
 /dtbo               emmc      /dev/block/by-name/dtbo                           flags=display="Dtbo";flashimg=1;backup=1;slotselect;
 /vbmeta             emmc      /dev/block/by-name/vbmeta                         flags=display="Vbmeta";flashimg=1;slotselect;
 /cust               ext4      /dev/block/by-name/cust                           flags=display="Cust";flashimg=1;
-
 
 ## Sensitive data (IMEI, MAC, ...)
 /nvram              emmc      /dev/block/by-name/nvram                          flags=display="Nvram";backup=1;
@@ -37,7 +24,6 @@
 /proinfo            emmc      /dev/block/by-name/proinfo                        flags=display="Proinfo";backup=1;
 
 ## Firmware
-
 /logo               emmc      /dev/block/by-name/logo                           flags=display="Logo";
 /seccfg             emmc      /dev/block/by-name/seccfg                         flags=display="Seccfg"
 /tee                emmc      /dev/block/by-name/tee                            flags=slotselect;
@@ -45,5 +31,5 @@
 /otp                emmc      /dev/block/by-name/otp                            flags=display="Otp"
 
 # Removable storage
-/sdcard1            auto       /dev/block/mmcblk1p1   /dev/block/mmcblk1   flags=display="MicroSD";storage;wipeingui;removable;fsflags="utf8"
+/sdcard1            auto       /dev/block/mmcblk1p1   /dev/block/mmcblk1   flags=display="Micro SD";storage;wipeingui;removable;fsflags="utf8"
 /usb_otg            auto      /dev/block/sda1        /dev/block/sda        flags=display="USB OTG";storage;wipeingui;removable;fsflags="utf8"
